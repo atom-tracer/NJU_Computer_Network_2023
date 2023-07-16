@@ -1,0 +1,114 @@
+{
+  "tests": [
+    {
+      "name": "Setup",
+      "setup": "",
+      "run": "sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt install libpcap0.8-dev && sudo apt install python3.7 && sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2 && sudo update-alternatives --auto python3 && sudo apt install python3.7-distutils && python3 -m pip install git+https://gitee.com/pavinberg/switchyard.git",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Test Advanced",
+      "setup": "",
+      "run": "swyard --nopdb -t testcases/testscenario2_advanced.srpy myrouter.py > testcases/result",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": null
+    },
+    {
+      "name": "Awk Process",
+      "setup": "",
+      "run": "awk '/Results for test scenario IP forwarding and ARP requester tests:/ {printf ($11 >= 50 ? \"ckpt1 1\\n\" : \"ckpt1 0\\n\"); printf($11 >= 100 ? \"ckpt2 1\\n\" : \"ckpt2 0\\n\"); printf($11 >= 150 ? \"ckpt3 1\\n\" : \"ckpt3 0\\n\"); printf($11 >= 650 ? \"ckpt4 1\\n\" : \"ckpt4 0\\n\");printf($11 >= 1205 ? \"ckpt5 1\\n\" : \"ckpt5 0\\n\"); printf($11 >= 1210 ? \"ckpt6 1\\n\" : \"ckpt6 0\\n\")}' testcases/result > testcases/result_ckpt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": null
+    },
+    {
+      "name": "Ckpt1_50",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt1 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 15
+    },
+    {
+      "name": "ckpt2_100",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt2 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 15
+    },
+    {
+      "name": "ckpt3_150",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt3 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "ckpt4_650",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt4 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "ckpt5_1205",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt5 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "ckpt6_1210",
+      "setup": "",
+      "run": "cat testcases/result_ckpt",
+      "input": "",
+      "output": "ckpt6 1",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "Clean",
+      "setup": "",
+      "run": "rm testcases/result testcases/result_ckpt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": null
+    },
+    {
+      "name": "Test Basic",
+      "setup": "",
+      "run": "swyard --nopdb -t testcases/testscenario2.srpy myrouter.py",
+      "input": "",
+      "output": "All tests passed!",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 10
+    }
+  ]
+}
